@@ -1,3 +1,12 @@
+@mixin bg {
+    background: rgba(0,130,222,1);
+  background: -moz-linear-gradient(left, rgba(0,130,222,1) 0%, rgba(0,179,250,1) 100%);
+  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(0,130,222,1)), color-stop(100%, rgba(0,179,250,1)));
+  background: -webkit-linear-gradient(left, rgba(0,130,222,1) 0%, rgba(0,179,250,1) 100%);
+  background: -o-linear-gradient(left, rgba(0,130,222,1) 0%, rgba(0,179,250,1) 100%);
+  background: -ms-linear-gradient(left, rgba(0,130,222,1) 0%, rgba(0,179,250,1) 100%);
+  background: linear-gradient(to right, rgba(0,130,222,1) 0%, rgba(0,179,250,1) 100%);
+}
 *{
     padding: 0;
     margin: 0;
@@ -39,8 +48,8 @@ header {
         display: inline-block;
         padding: 10px;
     }
-    li:last-child {
-        background-image: url('../img/svg/bg-get-app.svg');
+    li:hover {
+        @include bg;
         border-radius: 5px;
     }
     a {
@@ -59,7 +68,6 @@ header {
     padding-left: 15%;
     padding-right: 15%;
     align-items: center;
-    background: rgba(85,66,206,0.8);
 }
 .top-header.fixed ~ .menu {
     margin-top:100px;
@@ -106,13 +114,7 @@ header {
   .submit-button {
     width: 40%;
     height: 50px;
-    background: rgba(0,130,222,1);
-  background: -moz-linear-gradient(left, rgba(0,130,222,1) 0%, rgba(0,179,250,1) 100%);
-  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(0,130,222,1)), color-stop(100%, rgba(0,179,250,1)));
-  background: -webkit-linear-gradient(left, rgba(0,130,222,1) 0%, rgba(0,179,250,1) 100%);
-  background: -o-linear-gradient(left, rgba(0,130,222,1) 0%, rgba(0,179,250,1) 100%);
-  background: -ms-linear-gradient(left, rgba(0,130,222,1) 0%, rgba(0,179,250,1) 100%);
-  background: linear-gradient(to right, rgba(0,130,222,1) 0%, rgba(0,179,250,1) 100%);
+    @include bg;
   border: none;
   color: #fff;
   font-size: 12px;
@@ -262,31 +264,73 @@ main {
     flex-direction: column;
     align-items: center;
     width: 100%;
-}
+    label {
+      padding: 5px 20px;
+      position: relative;
+      z-index: 1;
+      display: block;
+      height: 30px;
+      line-height: 33px;
+      &:after {
+        content: '';
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        right: 13px;
+        top: 7px;
+        background: transparent url(../img/png/arrow_down.png) no-repeat center center;
+      }
+    }
+    input {
+      &:checked + label:hover:after {
+        content: '';
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        right: 13px;
+        top: 7px;
+        background: transparent url(../img/png/arrow_down.png) no-repeat center center;
+        background-image: url(../img/png/arrow_up.png);
+      }
+      display: none;
+    }
+    article {
+      margin-top: -1px;
+      overflow: hidden;
+      height: 0px;
+      position: relative;
+      z-index: 0;
+      transition: height 0.3s ease-in-out;
+      p {
+        line-height: 23px;
+        font-size: 14px;
+        padding: 20px;
+      }
+    }
+    input:checked ~ article {
+      transition: height 0.5s ease-in-out;
+      &.ac-medium {
+        height: 100px;
+      }
+    }
+  }
 .frequently-items {
     width: 100%;
     margin-top: 10px;
     padding: 10px;
-    border: 1px solid gray;
-    border-radius: 10px;
+    // border-bottom: 1px solid blue;
     font-size: 14px;
+    background: url('../img/png/bg-article.png');
     span {
         font-size: 18px;
     }
     p {
         padding-top: 10px;
         font-size: 14px;
-        display: none;
         top: 35px;
         width: 100%;
     }
 }
-
-.frequently-items:hover p{
-    display: block;
-    cursor: pointer;
-}
-
 .support-service {
     height: 50vh;
     display: flex;
@@ -421,7 +465,7 @@ main {
     }
     .frequently {
         width: 100%;
-        padding: 2%;
+        padding: 8% 2%;
         margin-top: 20%;
         span {
             font-size: 24px;
